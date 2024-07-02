@@ -14,6 +14,10 @@ app.use(express.json());
 
 app.use("/api/users", usersRouter);
 
+app.get("/", (req, res, next) => {
+  res.send("<h1>Proyecto final desarrollo fullstack FS11 backend ON!!</h1>");
+});
+
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
