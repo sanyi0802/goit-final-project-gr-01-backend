@@ -2,35 +2,21 @@
  * @swagger
  * components:
  *   schemas:
- *     Book:
+ *     User:
  *       type: object
  *       required:
- *         - title
- *         - author
- *         - finished
+ *         - email
+ *         - password
  *       properties:
- *         id:
+ *         email:
  *           type: string
- *           description: The auto-generated id of the book
- *         title:
+ *           description: email's user
+ *         password:
  *           type: string
- *           description: The title of your book
- *         author:
- *           type: string
- *           description: The book author
- *         finished:
- *           type: boolean
- *           description: Whether you have finished reading the book
- *         createdAt:
- *           type: string
- *           format: date
- *           description: The date the book was added
+ *           description: password's user
  *       example:
- *         id: d5fE_asz
- *         title: The New Turing Omnibus
- *         author: Alexander K. Dewdney
- *         finished: false
- *         createdAt: 2020-03-10T04:05:06.157Z
+ *         email: pruebamail@goitmail.com
+ *         password: passwordg01t
  */
 const express = require("express");
 
@@ -45,7 +31,7 @@ router.post("/signup", controllers.registerUser);
 router.post("/login", controllers.login);
 
 //En point privados
-router.get("/logout", validateJWT, controllers.logout);
+router.post("/logout", validateJWT, controllers.logout);
 
 router.get("/current", validateJWT, controllers.current);
 
