@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
-//const { email } = require("../archivos antiguos/validation/user.validation");
 
 const userSchema = Schema(
   {
@@ -23,12 +22,6 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    /*
-    verificationToken: {
-      type: String,
-      required: [true, "Verify token is required"],
-    },
-    */
     // Probablemente haya que guardar en el usuario peso altura y demas datos.
   },
   {
