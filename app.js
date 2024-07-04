@@ -23,7 +23,10 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/users", usersRouter);
+connectDB();
+
+//app.use("/api/users", usersRouter);
+app.use("/api", appRouter);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 

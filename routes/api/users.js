@@ -30,7 +30,7 @@ router.post("/signup", controllers.registerUser);
 
 router.post("/login", controllers.login);
 
-//En point privados
+//End point privados
 router.post("/logout", validateJWT, controllers.logout);
 
 router.get("/current", validateJWT, controllers.current);

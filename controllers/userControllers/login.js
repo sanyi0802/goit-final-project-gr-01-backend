@@ -21,7 +21,6 @@ const login = async (req, res) => {
     }
 
     const token = await generateJWT(user._id, user.name, user.email);
-    console.log(token);
     await User.findByIdAndUpdate(user._id, {
       token: token,
     });
@@ -30,7 +29,6 @@ const login = async (req, res) => {
       user: { name: user.name, email: user.email },
     });
   } catch (error) {
-    console.error(error);
     res
       .status(400)
       .json({ message: "Error de Joi u otra biblioteca de validación" });
