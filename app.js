@@ -1,10 +1,13 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-
-const usersRouter = require("./routes/api/users");
+const connectDB = require("./db/config");
+require("dotenv").config();
 
 const app = express();
+
+//const usersRouter = require("./routes/api/users");
+const appRouter = require("./routes/api/router");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -12,7 +15,10 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/users", usersRouter);
+connectDB();
+
+//app.use("/api/users", usersRouter);
+app.use("/api", appRouter);
 
 app.get("/", (req, res, next) => {
   res.send("<h1>Proyecto final desarrollo fullstack FS11 backend ON!!</h1>");
