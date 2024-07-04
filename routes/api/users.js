@@ -1,3 +1,23 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: email's user
+ *         password:
+ *           type: string
+ *           description: password's user
+ *       example:
+ *         email: pruebamail@goitmail.com
+ *         password: passwordg01t
+ */
 const express = require("express");
 
 const router = express.Router();
@@ -10,8 +30,8 @@ router.post("/signup", controllers.registerUser);
 
 router.post("/login", controllers.login);
 
-//En point privados
-router.get("/logout", validateJWT, controllers.logout);
+//End point privados
+router.post("/logout", validateJWT, controllers.logout);
 
 router.get("/current", validateJWT, controllers.current);
 
