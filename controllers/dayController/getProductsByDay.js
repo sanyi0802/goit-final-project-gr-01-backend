@@ -9,6 +9,7 @@ const getProductsByDay = async (req, res) => {
     return res.status(200).json(getProductOfTheDay);
   } catch (error) {
     console.log(error);
+    return res.json({ message: "An error has ocurred (getProductsByDay)" });
   }
 };
 

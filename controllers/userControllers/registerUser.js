@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
     const foundUser = await User.findOne({ email });
     if (foundUser) {
       return res.status(409).json({
-        message: "Email in use",
+        message: "Correo Electrónico en uso",
       });
     }
 
@@ -34,9 +34,7 @@ const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
-      message: "Error de Joi u otra biblioteca de validación",
-    });
+    return res.json({ message: "An error has ocurred (registerUser)" });
   }
 };
 
