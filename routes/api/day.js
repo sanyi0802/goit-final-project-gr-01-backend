@@ -5,11 +5,11 @@ const router = express.Router();
 const controllers = require("../../controllers/dayController");
 const { validateJWT } = require("../../utils/validateJWT");
 
-//En point privados
+//End point privados
 router.post("/", validateJWT, controllers.addProductByDay);
 
-router.delete("/", validateJWT, controllers.deleteProductByDay);
+router.delete("/:foodId", validateJWT, controllers.deleteProductByDay);
 
-router.post("/info", validateJWT, controllers.getProductsByDay);
+router.get("/info", validateJWT, controllers.getProductsByDay);
 
 module.exports = router;
