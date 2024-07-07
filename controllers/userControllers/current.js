@@ -10,7 +10,7 @@ const current = async (req, res) => {
     }
     res.status(200).json({ name: user.name, email: user.email });
   } catch (error) {
-    res.status(401).json({ message: "Not authorized" });
+    return res.json({ message: "An error has ocurred (currentUser)" });
   }
 };
 

@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use("/api", appRouter);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get("/", (req, res, next) => {
   res.send("<h1>Proyecto final desarrollo fullstack FS11 backend ON!!</h1>");
