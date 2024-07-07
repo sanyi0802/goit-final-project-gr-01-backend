@@ -1,5 +1,6 @@
 const app = require("./app");
-const conectionDB = require("./models/config");
+
+const conectionDB = require("./db/config");
 const dotenv = require("dotenv");
 
 dotenv.config({ path: ".env" });
