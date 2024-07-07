@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { obtenerIngestaDiaria, guardarIngestaDiaria } = require("../../controladores/ingestaDiariaControlador");
-const verifyToken = require("../../middlewares/auth.middleware");
+const {
+  obtenerIngestaDiaria,
+  guardarIngestaDiaria,
+} = require("../../controladores/ingestaDiariaControlador");
+const { validateJWT } = require("../../utils/validateJWT");
 
-router.get("/", verifyToken, obtenerIngestaDiaria);
-router.post("/", verifyToken, guardarIngestaDiaria);
+router.get("/", validateJWT, obtenerIngestaDiaria);
+router.post("/", validateJWT, guardarIngestaDiaria);
 
 module.exports = router;
