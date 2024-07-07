@@ -9,7 +9,7 @@ const deleteProductByDay = async (req, res) => {
     return res.status(204).json({ message: "Item deleted" });
   } catch (error) {
     console.log(error);
-    return res.json({ message: "An error has ocurred" });
+    return res.json({ message: "An error has ocurred (deleteProductsByDay)" });
   }
 };
 

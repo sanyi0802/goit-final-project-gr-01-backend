@@ -5,22 +5,27 @@ const options = {
       title: "Slimmoms Express API with Swagger",
       version: "0.1.0",
       description:
-        "This is a simple CRUD API application made with Express and documented with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-      contact: {
-        name: "LogRocket",
-        url: "https://logrocket.com",
-        email: "info@email.com",
-      },
+        "Es una simple aplicacion API para llevar control calórico de alimentos",
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:3000/api/",
+      },
+      {
+        url: "https://goit-final-project-gr-01-backend.onrender.com/api/",
       },
     ],
+  },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+      },
+    },
+  },
+  security: {
+    bearerAuth: [],
   },
   apis: ["./routes/api/*.js"],
 };

@@ -16,7 +16,7 @@ const logout = async (req, res) => {
       message: "No Content",
     });
   } catch (error) {
-    res.status(401).json({ message: "Not authorized" });
+    return res.json({ message: "An error has ocurred (logout)" });
   }
 };
 
