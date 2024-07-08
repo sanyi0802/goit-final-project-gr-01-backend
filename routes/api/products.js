@@ -24,8 +24,12 @@ const router = express.Router();
 
 const controllers = require("../../controllers/productController");
 const { validateJWT } = require("../../utils/validateJWT");
+const productsController = require("../../controllers/productController/products.blacklist"); //blacklist
 
 //En point privados
 router.get("/", validateJWT, controllers.getProducts);
+
+// endpoint lista de alimentos no recomendados y la ingesta diaria de calorías
+router.post("/blacklist", productsController.getBlacklistAndCalories);
 
 module.exports = router;

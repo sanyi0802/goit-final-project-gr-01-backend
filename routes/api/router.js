@@ -10,7 +10,7 @@ const ingestaDiaria = require("./ingestaDiaria");
 
 appRouter.use("/users", userRouter);
 appRouter.use("/daily-rate", dailyrateRouter);
-appRouter.use("/daily", ingestaDiaria);
+appRouter.use("/ingesta-diaria", ingestaDiaria);
 appRouter.use("/day", day);
 appRouter.use("/products", products);
 
