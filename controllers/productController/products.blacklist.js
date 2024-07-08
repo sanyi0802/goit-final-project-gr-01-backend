@@ -8,7 +8,7 @@ exports.getBlacklistAndCalories = (req, res) => {
     product.groupBloodNotAllowed.includes(true)
   );
 
-  // Si no se proporcionan IDs de productos, solo devolver la lista negra
+  // Si no se proporcionan IDs de productos, solo devuelve la lista negra
   if (
     !selectedProductIds ||
     !Array.isArray(selectedProductIds) ||
