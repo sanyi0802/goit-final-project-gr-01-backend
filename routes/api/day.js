@@ -81,6 +81,14 @@
  *      responses:
  *        204:
  *          description: Eliminado con exto
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      message:
+ *                          type: string
+ *                          description: mensaje de respuesta al eliminar exitosamente
+ *                      example:
+ *                          message: Elemento eliminado
  *        401:
  *          description: Usuario no autorizado
  *          content:
