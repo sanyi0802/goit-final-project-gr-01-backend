@@ -2,8 +2,8 @@ const IngestaDiaria = require("../models/IngestaDiaria");
 
 const obtenerIngestaDiaria = async (req, res) => {
   try {
-    const { usuarioId } = req.user;
-    const ingestaDiaria = await IngestaDiaria.findOne({ usuarioId }).sort({ fecha: -1 });
+    const { userId } = req;
+    const ingestaDiaria = await IngestaDiaria.findOne({ usuarioId: userId }).sort({ fecha: -1 });
     if (!ingestaDiaria) {
       return res.status(404).json({ mensaje: "No se encontraron datos para hoy" });
     }
@@ -20,13 +20,14 @@ const calcularIngestaCalorias = (peso, altura, edad, pesoDeseado) => {
 
 const guardarIngestaDiaria = async (req, res) => {
   try {
-    const { usuarioId } = req.user;
+    const { userId } = req; 
+    console.log('User ID in controller:', userId); 
     const { peso, altura, edad, pesoDeseado, alimentosNoRecomendados } = req.body;
 
     const calorias = calcularIngestaCalorias(peso, altura, edad, pesoDeseado);
 
     const ingestaDiaria = new IngestaDiaria({
-      usuarioId,
+      usuarioId: userId,
       calorias,
       alimentosNoRecomendados,
     });

@@ -1,62 +1,34 @@
-const users = require("../validation/user.validationdb");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const users = require("../validation/user.validationdb");
 
-const getUserByEmail = async (_email) => {
-  try {
-    const userExist = await users.findOne({ email: _email }).exec();
-    return userExist;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const getUserByTk = async (token) => {
-  try {
-    const userExist = await users.findOne({ verificationToken: token }).exec();
-    return userExist;
-  } catch (error) {
-    console.error(error);
-  }
+const getUserByEmail = async (email) => {
+  return await users.findOne({ email }).exec();
 };
 
 const createUser = async (body) => {
-  try {
-    const password = await bcrypt.hash(
-      body.password,
-      parseInt(process.env.SALT)
-    );
-    const token = jwt.sign({ ...body, password }, process.env.JWT_SECRET);
-    const newContact = await users.create({
-      ...body,
-      password,
-      token,
-    });
-    return newContact;
-  } catch (error) {
-    console.error(error);
-  }
+  const hashedPassword = await bcrypt.hash(body.password, parseInt(process.env.SALT));
+  const user = new users({
+    email: body.email,
+    password: hashedPassword,
+  });
+  await user.save();
+  const token = generateToken(user);
+  user.token = token;
+  await user.save();
+  return user;
 };
 
-const comparePasswords = async (textPassword, userObject) => {
-  try {
-    if (textPassword === null || userObject === null) return false;
-    return await bcrypt.compare(textPassword, userObject.password);
-  } catch (error) {
-    console.error(error);
-  }
+const comparePasswords = async (textPassword, user) => {
+  return await bcrypt.compare(textPassword, user.password);
 };
 
-const generateToken = async (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+const generateToken = (user) => {
+  return jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 };
 
 const updateToken = async (id, token) => {
-  try {
-    await users.findByIdAndUpdate(id, { token }).exec();
-  } catch (error) {
-    console.error(error);
-  }
+  await users.findByIdAndUpdate(id, { token }).exec();
 };
 
 module.exports = {
@@ -65,5 +37,4 @@ module.exports = {
   comparePasswords,
   generateToken,
   updateToken,
-  getUserByTk,
 };

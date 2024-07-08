@@ -6,6 +6,8 @@ function verifyToken(req, res, next) {
     if (!token) return res.status(401).json({ message: "Not authorized" });
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.email = decoded.email;
+    req.userId = decoded.userId;
+    console.log('User ID:', req.userId);
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid token" });
