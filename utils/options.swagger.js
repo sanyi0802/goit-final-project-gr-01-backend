@@ -9,10 +9,10 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000/api/",
+        url: "https://goit-final-project-gr-01-backend.onrender.com/api/",
       },
       {
-        url: "https://goit-final-project-gr-01-backend.onrender.com/api/",
+        url: "http://localhost:3000/api/",
       },
     ],
   },
