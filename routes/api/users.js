@@ -87,6 +87,60 @@
  *             application/json:
  *                  schema:
  *                      $ref: '#/components/error/internal'
+ * /users/refresh-token:
+ *   post:
+ *     summary: Generar un nuevo par de tokens (acceso y actualización)
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: El token de actualización
+ *     responses:
+ *       200:
+ *         description: Nuevo par de tokens generado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: El nuevo token de acceso
+ *                 refreshToken:
+ *                   type: string
+ *                   description: El nuevo token de actualización
+ *       401:
+ *         description: El token de actualización es requerido.
+ *         content:
+ *              application/json:
+ *                  schema:
+ *                      message:
+ *                          type: string
+ *                          description: mensaje de error
+ *                      example:
+ *                          message: El token de actualización es requerido
+ *       403:
+ *         description: Token de actualización inválido.
+ *         content:
+ *              application/json:
+ *                  schema:
+ *                      message:
+ *                          type: string
+ *                          description: mensaje de error
+ *                      example:
+ *                          message: Token de actualización inválido
+ *       500:
+ *         description: Algún error interno en el servicio
+ *         content:
+ *             application/json:
+ *                  schema:
+ *                      $ref: '#/components/error/internal'
  * components:
  *   error:
  *      internal:
@@ -181,14 +235,39 @@ const router = express.Router();
 const controllers = require("../../controllers/userControllers/index");
 const { validateJWT } = require("../../utils/validateJWT");
 
-//End point publicos
+// Endpoints públicos
 router.post("/signup", controllers.registerUser);
 
 router.post("/login", controllers.login);
 
-//End point privados
+// Endpoints privados
 router.post("/logout", validateJWT, controllers.logout);
 
 router.get("/current", validateJWT, controllers.current);
+
+// Endpoint para generar un nuevo par de tokens
+router.post("/refresh-token", async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      return res.status(401).json({ message: "El token de actualización es requerido" });
+    }
+
+    const decoded = verifyRefreshToken(refreshToken);
+    const user = await getUserByEmail(decoded.email);
+    if (!user || user.refreshToken !== refreshToken) {
+      return res.status(403).json({ message: "Token de actualización inválido" });
+    }
+
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user);
+    await updateToken(user._id, newAccessToken, newRefreshToken);
+
+    res.status(200).json({ token: newAccessToken, refreshToken: newRefreshToken });
+  } catch (error) {
+    console.error(error);
+    res.status(403).json({ message: "Token de actualización inválido" });
+  }
+});
 
 module.exports = router;
