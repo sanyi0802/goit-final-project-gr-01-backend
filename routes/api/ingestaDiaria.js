@@ -3,7 +3,7 @@
  * tags:
  *  name: ingesta-diaria
  *  description: API para administración de la ingesta diaria
- * /:
+ * /ingesta-diaria:
  *  get:
  *      summary: Obtiene la ingesta diaría de alimentos.
  *      tags: [ingesta-diaria]
